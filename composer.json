@@ -1,0 +1,20 @@
+{
+  "name": "Productors/UserModuleClient",
+  "description": "Client for module SOC Users",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Oleksandr Yeropudov",
+      "email": "oleksandr.yeropudov@gmail.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Productors\\UserClient\\": "UserClient/"
+    }
+  }
+}
