@@ -1,5 +1,5 @@
 {
-  "name": "Productors/UserModuleClient",
+  "name": "productors/user-module-client",
   "description": "Client for module SOC Users",
   "minimum-stability": "stable",
   "license": "proprietary",
