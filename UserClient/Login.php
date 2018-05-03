@@ -10,6 +10,8 @@ namespace Productors\UserClient;
 
 
 use GuzzleHttp\Exception\RequestException;
+use Productors\UserClient\Exceptions\CredentialsAreWrong;
+use Productors\UserClient\Exceptions\ValidationsErrors;
 
 class Login extends BaseClient
 {
@@ -35,7 +37,11 @@ class Login extends BaseClient
             return $response;
         } catch (RequestException $e) {
             $response = $this->StatusCodeHandling($e);
-            return $response;
+            if ($response['statuscode'] === 412) {
+                throw ValidationsErrors::withDataAndCode($response['error'], 412);
+            } else {
+                throw CredentialsAreWrong::withDataAndCode($response['error'], $response['statuscode']);
+            }
         }
     }
 
