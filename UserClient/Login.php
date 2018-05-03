@@ -31,15 +31,17 @@ class Login extends BaseClient
      */
     public function process($rawBody)
     {
-            $response = $this->callAuth('POST', self::URI, $rawBody);
-        if (array_key_exists('error', $response)) {
-            if ($response['statuscode'] === 412) {
-                throw ValidationsErrors::withDataAndCode($response['error'], 412);
-            } elseif ($response['statuscode'] === 401) {
-                throw CredentialsAreWrong::withDataAndCode($response['error'], $response['statuscode']);
+        $response = $this->callAuth('POST', self::URI, $rawBody);
+        if (!$response instanceof \stdClass) {
+            if (array_key_exists('error', $response)) {
+                if ($response['statuscode'] === 412) {
+                    throw ValidationsErrors::withDataAndCode($response['error'], 412);
+                } elseif ($response['statuscode'] === 401) {
+                    throw CredentialsAreWrong::withDataAndCode($response['error'], $response['statuscode']);
+                }
             }
         }
-            return $response;
+        return $response;
     }
 
 }
