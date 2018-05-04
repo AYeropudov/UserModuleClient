@@ -26,13 +26,14 @@ class Activate extends BaseClient
     }
 
     /**
+     * @param $id
      * @param array $rawBody
      * @return array|mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function process($rawBody)
+    public function process($id, $rawBody)
     {
         try {
-            $response = $this->callAuth('POST', self::URI . '/' . $this->storage->getUuid(), $rawBody, true);
+            $response = $this->callAuth('POST', self::URI . '/' . $id, $rawBody, false);
             return $response;
         } catch (RequestException $e) {
             $response = $this->StatusCodeHandling($e);
