@@ -10,6 +10,7 @@ namespace Productors\UserClient;
 
 
 use GuzzleHttp\Exception\RequestException;
+use Productors\UserClient\Exceptions\ClientError;
 
 class Update extends BaseClient
 {
@@ -35,7 +36,7 @@ class Update extends BaseClient
             return $response;
         } catch (RequestException $e) {
             $response = $this->StatusCodeHandling($e);
-            return $response;
+            throw ClientError::withDataAndCode($response['error'], $response['statuscode']);
         }
     }
 }

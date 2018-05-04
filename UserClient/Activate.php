@@ -12,9 +12,9 @@ namespace Productors\UserClient;
 use GuzzleHttp\Exception\RequestException;
 use Productors\UserClient\Exceptions\ClientError;
 
-class Refresh extends BaseClient
+class Activate extends BaseClient
 {
-    const URI = 'refresh';
+    const URI = 'activate';
 
     /**
      * Login constructor.
@@ -32,12 +32,11 @@ class Refresh extends BaseClient
     public function process($rawBody)
     {
         try {
-            $response = $this->callAuth('POST', self::URI, $rawBody, true);
+            $response = $this->callAuth('POST', self::URI . '/' . $this->storage->getUuid(), $rawBody, true);
             return $response;
         } catch (RequestException $e) {
             $response = $this->StatusCodeHandling($e);
             throw ClientError::withDataAndCode($response['error'], $response['statuscode']);
         }
     }
-
 }
