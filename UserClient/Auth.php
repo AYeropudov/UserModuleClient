@@ -32,7 +32,7 @@ class Auth extends BaseClient
     public function process($rawBody = null)
     {
         try {
-            $response = $this->callAuth('HEAD', self::URI, [], true);
+            $response = $this->callAuth('OPTIONS', self::URI, [], true);
             return $response;
         } catch (RequestException $e) {
             $response = $this->StatusCodeHandling($e);
