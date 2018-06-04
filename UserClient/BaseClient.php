@@ -71,7 +71,7 @@ class BaseClient
 
     private function prepareAccessToken()
     {
-        $this->accessToken = $this->storage->get('token');
+        $this->accessToken = $this->storage->get('accessToken');
     }
 
     protected function statusCodeHandling(RequestException $e)
