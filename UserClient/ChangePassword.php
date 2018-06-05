@@ -14,9 +14,9 @@ use Productors\UserClient\Exceptions\ClientError;
 use Productors\UserClient\Exceptions\CredentialsAreWrong;
 use Productors\UserClient\Exceptions\ValidationsErrors;
 
-class Update extends BaseClient
+class ChangePassword extends BaseClient
 {
-    const URI = 'edit';
+    const URI = 'change_password';
 
     /**
      * Login constructor.
