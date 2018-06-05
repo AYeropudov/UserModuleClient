@@ -10,7 +10,7 @@ class StorageTmp implements \Productors\UserClient\StorageInterface
      */
     public function get($key)
     {
-        return 'NTg5YjBhYTctYjFlYS00NTEyLWJmNjctNjUwMTQ2';
+        return 'Y2ExOTM5NjctMTAyMi00YTVlLWIwN2MtYWQ0OGI5';
     }
 
     /** @return string */

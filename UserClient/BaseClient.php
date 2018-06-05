@@ -12,6 +12,7 @@ namespace Productors\UserClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use Productors\UserClient\Exceptions\PasswordChangeException;
 
 class BaseClient
 {
@@ -56,6 +57,10 @@ class BaseClient
             }
             $url = self::HOST . $request;
             $response = $this->httpClient->request($method, $url, array('json' => $body, 'headers' => $header));
+
+            if ($response->getStatusCode() === 303) {
+                throw new PasswordChangeException('Нужно сменить пароль');
+            }
             return json_decode($response->getBody()->getContents());
         } catch (RequestException $e) {
             $response = $this->StatusCodeHandling($e);
