@@ -9,9 +9,6 @@
 namespace Productors\UserClient;
 
 
-use GuzzleHttp\Exception\RequestException;
-use Productors\UserClient\Exceptions\ClientError;
-
 class Register extends BaseClient
 {
     const URI = 'create';
@@ -31,12 +28,7 @@ class Register extends BaseClient
      */
     public function process($rawBody)
     {
-        try {
             $response = $this->callAuth('POST', self::URI, $rawBody, false);
             return $response;
-        } catch (RequestException $e) {
-            $response = $this->StatusCodeHandling($e);
-            throw ClientError::withDataAndCode($response['error'], $response['statuscode']);
-        }
     }
 }

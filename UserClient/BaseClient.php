@@ -10,8 +10,10 @@ namespace Productors\UserClient;
 
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Response;
 use Productors\UserClient\Exceptions\PasswordChangeException;
 
 class BaseClient
@@ -56,21 +58,29 @@ class BaseClient
                 $header = array('Authorization' => 'Bearer ' . $this->accessToken);
             }
             $url = self::HOST . $request;
-            $response = $this->httpClient->request($method, $url, array('json' => $body, 'headers' => $header));
+            $response = $this->getHttpClient()->request($method, $url, array('json' => $body, 'headers' => $header));
 
             if ($response->getStatusCode() === 303) {
                 throw new PasswordChangeException('Нужно сменить пароль');
             }
-            return json_decode($response->getBody()->getContents());
-        } catch (RequestException $e) {
-            $response = $this->StatusCodeHandling($e);
             return $response;
+        } catch (ConnectException $connectException) {
+            return new Response(503, ['Content-Type' => 'application/json',],
+                json_encode(['message' => 'service is not available']));
+        } catch (RequestException $e) {
+            return $e->getResponse();
         } catch (GuzzleException $e) {
-            return [
-                'message' => $e->getMessage(),
-                'line' => $e->getLine(),
-                'file' => $e->getFile(),
-            ];
+            return new Response(
+                400,
+                [
+                    'Content-Type' => 'application/json',
+                ],
+                json_encode([
+                    'message' => $e->getMessage(),
+                    'line' => $e->getLine(),
+                    'file' => $e->getFile(),
+                ])
+            );
         }
     }
 
@@ -79,19 +89,10 @@ class BaseClient
         $this->accessToken = $this->storage->get('accessToken');
     }
 
-    protected function statusCodeHandling(RequestException $e)
-    {
-        $response = array(
-            "statuscode" => $e->getResponse()->getStatusCode(),
-            "error" => json_decode($e->getResponse()->getBody(true)->getContents())
-        );
-        return $response;
-    }
-
     /**
      * @return Client
      */
-    protected function getHttpClient()
+    public function getHttpClient()
     {
         return $this->httpClient;
     }

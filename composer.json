@@ -15,6 +15,11 @@
   "autoload": {
     "psr-4": {
       "Productors\\UserClient\\": "UserClient/"
+      ""
     }
+  },
+  "require-dev": {
+    "codeception/codeception": "^2.4",
+    "codeception/base": "^2.4"
   }
 }

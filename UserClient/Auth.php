@@ -9,9 +9,6 @@
 namespace Productors\UserClient;
 
 
-use GuzzleHttp\Exception\RequestException;
-use Productors\UserClient\Exceptions\ClientError;
-
 class Auth extends BaseClient
 {
     const URI = 'check';
@@ -27,16 +24,11 @@ class Auth extends BaseClient
 
     /**
      * @param array $rawBody
-     * @return array|mixed|\Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function process($rawBody = null)
     {
-        try {
             $response = $this->callAuth('OPTIONS', self::URI, [], true);
             return $response;
-        } catch (RequestException $e) {
-            $response = $this->StatusCodeHandling($e);
-            throw ClientError::withDataAndCode($response['error'], $response['statuscode']);
-        }
     }
 }

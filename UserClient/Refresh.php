@@ -9,9 +9,6 @@
 namespace Productors\UserClient;
 
 
-use GuzzleHttp\Exception\RequestException;
-use Productors\UserClient\Exceptions\ClientError;
-
 class Refresh extends BaseClient
 {
     const URI = 'refresh';
@@ -31,13 +28,8 @@ class Refresh extends BaseClient
      */
     public function process($rawBody)
     {
-        try {
             $response = $this->callAuth('POST', self::URI, $rawBody, true);
             return $response;
-        } catch (RequestException $e) {
-            $response = $this->StatusCodeHandling($e);
-            throw ClientError::withDataAndCode($response['error'], $response['statuscode']);
-        }
     }
 
 }
