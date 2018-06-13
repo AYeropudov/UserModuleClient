@@ -1,1 +1,2 @@
 language: php
+php vendor/bin/codecept run
