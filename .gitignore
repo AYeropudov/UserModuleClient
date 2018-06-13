@@ -8,7 +8,4 @@ composer.phar
 # composer.lock
 
 /.idea/
-/tests/_support/
-/tests/_output/
-/tests/_data/
-!/tests/_output/
+
