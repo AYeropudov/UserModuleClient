@@ -18,7 +18,7 @@ class ResetLinkActivate extends BaseClient
     /**
      *
      */
-    const URI = 'reset_password';
+    const URI = 'reset_link';
 
     /**
      * ResetLinkGenerate constructor.
