@@ -11,5 +11,4 @@ namespace Productors\UserClient\Exceptions;
 
 class PasswordChangeException extends \RuntimeException
 {
-
 }
