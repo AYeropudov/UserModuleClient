@@ -20,7 +20,7 @@ class ResetLinkActivateTest extends \Codeception\Test\Unit
     public function testProcess()
     {
         $client = new \Productors\UserClient\ResetLinkActivate($this->storage);
-        $result = $client->process('string');
+        $result = $client->process('string', []);
 
         $this->assertInstanceOf(\GuzzleHttp\Psr7\Response::class, $result);
     }
