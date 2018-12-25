@@ -32,9 +32,9 @@ class ResetLinkActivate extends BaseClient
      * @param string $uuid
      * @return array|mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function process($uuid)
+    public function process($uuid, $body)
     {
-        $response = $this->callAuth('POST', self::URI . '/' . $uuid, []);
+        $response = $this->callAuth('POST', self::URI . '/' . $uuid, $body);
         return $response;
     }
 
